@@ -1,0 +1,80 @@
+<div class="container">
+
+  <div class="form-container">
+    <h3>Create New Ticket</h3>
+    <form (ngSubmit)="createTicket()">
+      <label for="newSubject">Subject:</label>
+      <input type="text" id="newSubject" [(ngModel)]="newTicket.subject" name="newSubject" required>
+
+      <label for="newDescription">Description:</label>
+      <input type="text" id="newDescription" [(ngModel)]="newTicket.description" name="newDescription" required>
+
+      <label for="newEmail">Email:</label>
+      <input type="email" id="newEmail" [(ngModel)]="newTicket.email" name="newEmail" required>
+
+      <label for="newContactName">Contact Name:</label>
+      <input type="text" id="newContactName" [(ngModel)]="newTicket.contactName" name="newContactName" required>
+
+      <!-- Add other fields for newTicket as needed -->
+
+      <button type="submit">Create</button>
+    </form>
+  </div>
+
+  <div class="tickets-container">
+    <h2>Tickets</h2>
+
+    <table class="ticket-table">
+      <tr>
+        <th>Subject</th>
+        <th>Description</th>
+        <th>Email</th>
+        <th>Contact Name</th>
+        <th>Status</th>
+        <th>Actions</th>
+      </tr>
+
+      <tr *ngFor="let ticket of tickets" class="ticket-item">
+        <td>
+          <ng-container *ngIf="ticket && !ticket.isEditing && ticket.subject">{{ ticket.subject }}</ng-container>
+          <ng-container *ngIf="ticket && ticket.isEditing && updatedTicket && updatedTicket.subject">
+            <input type="text" [(ngModel)]="updatedTicket.subject" placeholder="Updated Subject" value="{{ updatedTicket.subject }}">
+          </ng-container>
+        </td> 
+        <td>
+          <ng-container *ngIf="!ticket.isEditing">{{ ticket.description }}</ng-container>
+          <ng-container *ngIf="ticket.isEditing">
+            <input type="text" [(ngModel)]="updatedTicket.description" placeholder="Updated Description" value="{{ updatedTicket.description }}">
+          </ng-container>
+        </td>
+        <td>
+          {{ ticket.email }}
+        </td>
+        <td>
+          {{ ticket.contactName }}
+        </td>
+        <td>
+          <ng-container *ngIf="!ticket.isEditing">{{ ticket.status }}</ng-container>
+          <ng-container *ngIf="ticket.isEditing">
+            <select id="status" [(ngModel)]="updatedTicket.status">
+              <option value="Open" [selected]="updatedTicket.status === 'Open'">Open</option>
+              <option value="Pending" [selected]="updatedTicket.status === 'Pending'">Pending</option>
+              <option value="Resolved" [selected]="updatedTicket.status === 'Resolved'">Resolved</option>
+              <option value="Closed" [selected]="updatedTicket.status === 'Closed'">Closed</option>
+            </select>
+          </ng-container>
+        </td>        
+        <td>
+          <ng-container *ngIf="!ticket.isEditing">
+            <button (click)="startEdit(ticket)">Edit</button>
+          </ng-container>
+          <ng-container *ngIf="ticket.isEditing">
+            <button (click)="updateTicket(ticket)">Save</button>
+            <button (click)="cancelEdit(ticket)">Cancel</button>
+          </ng-container>
+          <button class="delete-button" (click)="deleteTicket(ticket)">Delete</button>
+        </td>
+      </tr>
+    </table>
+  </div>
+</div>
