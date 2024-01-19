@@ -74,8 +74,6 @@ Usage
     Navigate to the Tickets section to view, create, update, or delete tickets.
 
 
-# Ticket Management System
-
 ## MongoDB Configuration
 
 Before running the application, make sure to configure your MongoDB connection. The application assumes the use of a local MongoDB instance with the following settings:
