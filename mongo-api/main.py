@@ -139,26 +139,6 @@ async def login_for_access_token(user: UserLogin):
     token = create_token(token_data)
     return {"access_token": token, "token_type": "bearer"}
 
-
-# CRUD Operations for Tickets
-# @app.get("/tickets", response_model=list)
-# async def read_tickets(token: str = Depends(verify_token)):
-#     return list(tickets_collection.find())
-
-# Ticket model with ObjectId as a string
-# class TicketModel(BaseModel):
-#     subject: str
-#     description: str
-#     email: str
-#     contact_name: str
-
-
-# # CRUD Operations for Tickets
-# @app.get("/tickets", response_model=list[TicketModel])
-# async def read_tickets(token: str = Depends(verify_token)):
-#     tickets = tickets_collection.find()
-#     return [{"_id": str(ticket["_id"]), **ticket} for ticket in tickets]
-
 # Model for Ticket
 class Ticket(BaseModel):
     id: str = Field(..., alias='_id')
